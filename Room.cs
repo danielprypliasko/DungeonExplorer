@@ -54,8 +54,16 @@ namespace DungeonExplorer
         private static int roomMapSize = 4;
 
         private static string[] roomDescriptions = { 
-           "hey",
-           "hi"
+            "A dimly-lit, square room with light walls and a wooden floor.",
+            "A well-lit, square room with brick walls and a concrete floor.",
+            "A dark, rectangular room with wooden walls and a wooden floor."
+        };
+
+        
+        private static string[] roomItems = { 
+           "Sword",
+           "Healing Potion",
+            "Strength Potion",
         };
 
         public static Room GetRoomAt(IVec2 position)
@@ -107,9 +115,11 @@ namespace DungeonExplorer
                 for (int j = 0; j < roomMapSize; j++)
                 {
                     int randomRoomDescriptionIdx = random.Next(0, roomDescriptions.Length);
-
                     string randomRoomDescription = roomDescriptions[randomRoomDescriptionIdx];
-                    string randomRoomItem = "Sword";
+                    
+                    int randomRoomItemIdx = random.Next(0, roomItems.Length);
+                    string randomRoomItem = roomItems[randomRoomItemIdx];
+                    
                     Room randomRoom = new Room(randomRoomDescription, randomRoomItem);
                     rooms[i, j] = randomRoom;
                 }
