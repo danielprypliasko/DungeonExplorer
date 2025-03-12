@@ -29,7 +29,7 @@ namespace DungeonExplorer
                 playerName = Console.ReadLine();
                 if (string.IsNullOrEmpty(playerName))
                 {
-                    return;
+                    continue;
                 }
                 else
                 {
