@@ -26,6 +26,7 @@ namespace DungeonExplorer
         public string PickUpItem()
         {
             this.HasItem = false;
+            this.Item = null;
             return this.Item;
         }
     }
