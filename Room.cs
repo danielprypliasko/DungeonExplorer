@@ -9,13 +9,15 @@ namespace DungeonExplorer
     {
         public string Description { get; private set; }
         public bool HasItem { get; private set; }
-        public string Item { get; private set; }
+        //public string Item { get; private set; }
+        public List<string> Items { get; private set; }
         public bool Visited { get; private set; }
 
-        public Room(string description, string item)
+        public Room(string description, List<string> items)
         {
             this.Description = description;
-            this.Item = item;
+            //this.Item = item;
+            this.Items = items;
             this.HasItem = true;
             this.Visited = false;
         }
@@ -25,13 +27,29 @@ namespace DungeonExplorer
             return Description;
         }
 
+        public string ListItems()
+        {
+            string output = "";
+            foreach (var item in Items)
+            {
+                output += ($"{item}\n");
+            }
+            return output;
+        }
+
         public void SetVisited() { this.Visited = true; }
 
-        public string PickUpItem()
+        public string PickUpItem(int idx)
         {
-            this.HasItem = false;
-            this.Item = null;
-            return this.Item;
+            
+            string item = Items[idx];
+            Items.RemoveAt(idx);
+
+            if (Items.Count == 0) { HasItem = false; }
+            return item;
+            //this.HasItem = false;
+            //this.Item = null;
+            //return this.Item;
         }
     }
     public static class RoomMap
@@ -150,8 +168,11 @@ namespace DungeonExplorer
                 {
                     int randomRoomItemIdx = random.Next(0, roomItems.Length);
                     string randomRoomItem = roomItems[randomRoomItemIdx];
+
+                    List<string> randomRoomItems = new List<string>();
+                    randomRoomItems.Add(randomRoomItem);
                     
-                    Room randomRoom = new Room(GenerateRoomDescription(), randomRoomItem);
+                    Room randomRoom = new Room(GenerateRoomDescription(), randomRoomItems);
                     rooms[i, j] = randomRoom;
                 }
             }
