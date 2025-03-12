@@ -33,19 +33,61 @@ namespace DungeonExplorer
     {
         private static Room[,] rooms;
 
-        private static int roomMapSize = 4;
+        private static readonly int roomMapSize = 4;
 
-        private static string[] roomDescriptions = { 
-            "A dimly-lit, square room with light walls and a wooden floor.",
-            "A well-lit, square room with brick walls and a concrete floor.",
-            "A dark, rectangular room with wooden walls and a wooden floor."
+        private static readonly Random random = new Random();
+
+
+        private static readonly string[] roomShapeDescriptions = {
+            "square", "rectangular", "circular", "hexagonal", "L-shaped", "triangular", "narrow", "vast", "compact"
         };
 
+        private static readonly string[] roomLightingDescriptions = {
+            "dimly-lit", "well-lit", "dark", "sunlit", "moonlit", "candlelit", "pitch-black", "flickering", "muted"
+        };
+
+        private static readonly string[] roomWallDescriptions = {
+            "stone", "brick", "wooden paneled", "marble", "concrete", "metal-plated", "moss-covered", "ivy-covered"
+        };
+    
+        private static readonly string[] roomFloorDescriptions = {
+            "wooden", "stone", "marble", "carpeted", "tiled", "dirt", "metal grating", "moss-covered", "concrete", "checkered", "cracked"
+        };
+
+        private static readonly string[] roomFeatureDescriptions = {
+            "with a crackling fireplace", "containing an ornate fountain", "with strange symbols etched into the floor", "with a massive chandelier", "featuring a mysterious altar", "with bookshelves lining the walls", "with cobwebs in every corner",
+            "", "", "", "", "", "", "", "",
+        };
+        public static string GenerateRoomDescription()
+        {
+            // Generates a random room description
+
+            string shape = roomShapeDescriptions[random.Next(roomShapeDescriptions.Length)];
+            string light = roomLightingDescriptions[random.Next(roomLightingDescriptions.Length)];
+            string wall = roomWallDescriptions[random.Next(roomWallDescriptions.Length)];
+            string floor = roomFloorDescriptions[random.Next(roomFloorDescriptions.Length)];
+            string feature = roomFeatureDescriptions[random.Next(roomFeatureDescriptions.Length)];
+
+            string description = $"A {light}, {shape} room with {wall} walls and {floor} flooring";
+
+            if (!string.IsNullOrEmpty(feature))
+            {
+                description += " " + feature;
+            }
+
+            description += ".";
+
+            return description;
+        }
         
         private static string[] roomItems = { 
-           "Sword",
-           "Healing Potion",
+            "Sword",
+            "Healing Potion",
             "Strength Potion",
+            "Shield",
+            "Bow",
+            "Map",
+            "Key",
         };
 
         public static Room GetRoomAt(IVec2 position)
@@ -96,18 +138,15 @@ namespace DungeonExplorer
         {
             rooms = new Room[roomMapSize, roomMapSize];
             // Fill up the room map with random rooms
-            Random random = new Random();
+            
             for (int i = 0; i < roomMapSize; i++)
             {
                 for (int j = 0; j < roomMapSize; j++)
                 {
-                    int randomRoomDescriptionIdx = random.Next(0, roomDescriptions.Length);
-                    string randomRoomDescription = roomDescriptions[randomRoomDescriptionIdx];
-                    
                     int randomRoomItemIdx = random.Next(0, roomItems.Length);
                     string randomRoomItem = roomItems[randomRoomItemIdx];
                     
-                    Room randomRoom = new Room(randomRoomDescription, randomRoomItem);
+                    Room randomRoom = new Room(GenerateRoomDescription(), randomRoomItem);
                     rooms[i, j] = randomRoom;
                 }
             }
