@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using static DungeonExplorer.Utils;
 
 namespace DungeonExplorer
@@ -14,7 +15,9 @@ namespace DungeonExplorer
         public Game()
         {
             // Initialize the game with one room and one player
-            Room firstRoom = new Room("A dark, rectangular room with brick walls and a wooden floor.", "Sword");
+            List<string> items = new List<string>();
+            items.Add("Sword");
+            Room firstRoom = new Room("A dark, rectangular room with brick walls and a wooden floor.", items);
 
             RoomMap.SetRoomAt(position, firstRoom);
 
@@ -74,22 +77,22 @@ namespace DungeonExplorer
                         Console.WriteLine($"You look around the room");
                         bool hasItem = currentRoom.HasItem;
                         if (!hasItem) { Console.WriteLine($"There's nothing of interest"); break; }
-                        else { Console.WriteLine($"You see an item.\nIt's a {currentRoom.Item}"); }
-                        string[] itemChoices = {
-                            "Pickup the item",
-                            "Leave it alone",
-                   
-                        };
+                        else {Console.WriteLine($"You find something..");}
+
+                        List<string> itemChoicePrompt = new List<string>(currentRoom.Items.Select((item) => { return $"Take {item}"; }));
+                        itemChoicePrompt.Add("Leave");
+
+                        string[] itemChoices = itemChoicePrompt.ToArray();
+                        
                         int itemChoice = ChoicePrompt("What would you like to do?", itemChoices);
-                        switch (itemChoice)
-                        {
-                            case 0:
-                                player.PickUpItem(currentRoom.PickUpItem());
-                                break;
-                            case 1:
-                                Console.WriteLine("You look at the item but decide there are better things to do");
-                                break;
+
+
+                        if (itemChoice == itemChoices.Length-1) {
+                            Console.WriteLine("You decide there are better things to do");
+                            break;
                         }
+
+                        player.PickUpItem(currentRoom.PickUpItem(itemChoice));
 
                         break;
                     case 3:

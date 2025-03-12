@@ -47,8 +47,10 @@ namespace DungeonExplorer
 
             RunTest("basic room setup", () =>
             {
-                
-                Room room = new Room(RoomMap.GenerateRoomDescription(), "Test Item");
+                List<string> items = new List<string>();
+                items.Add("Test Item");
+
+                Room room = new Room(RoomMap.GenerateRoomDescription(), items);
                 
                 Debug.Assert(room != null);
                 Debug.Assert(room.Visited == false);
@@ -56,11 +58,11 @@ namespace DungeonExplorer
                 room.SetVisited();
 
                 Debug.Assert(room.Visited == true);
-                Debug.Assert(room.Item == "Test Item");
+                Debug.Assert(room.Items[0] == "Test Item");
 
-                room.PickUpItem();
+                room.PickUpItem(0);
 
-                Debug.Assert(room.Item == null);
+                Debug.Assert(room.Items[0] == null);
             });
 
             RunTest("basic player test", () =>
