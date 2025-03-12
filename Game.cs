@@ -27,7 +27,7 @@ namespace DungeonExplorer
             {
                 Console.Write("Your name: ");
                 playerName = Console.ReadLine();
-                if (playerName == null)
+                if (string.IsNullOrEmpty(playerName))
                 {
                     return;
                 }
