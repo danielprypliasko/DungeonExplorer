@@ -20,6 +20,10 @@ namespace DungeonExplorer
             this.Visited = false;
         }
 
+        public string GetDescription()
+        {
+            return Description;
+        }
 
         public void SetVisited() { this.Visited = true; }
 
