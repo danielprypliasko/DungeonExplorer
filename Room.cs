@@ -79,9 +79,14 @@ namespace DungeonExplorer
 
         public static (List<Room>, List<IVec2>) GetSurroundingRooms(IVec2 position)
         {
-            // Get's all the rooms that are possible to travel to and also the offset of where they are, to display the location (left, right , etc)
+            // Gets all the rooms that are possible to travel to and also the offset of where they are, to display the location (left, right , etc)
+            
+            // Makes two lists, one for the rooms and another for the offsets
             List<Room> foundRooms = new List<Room>();
             List<IVec2> foundRoomsOffsets = new List<IVec2>();
+
+            // The next lines simply take the position, and add a unit vector labelled by its direction
+            // in order to get the room in that direction, then it checks if it exists and adds it to our lists
    
             IVec2 upPosition = position + UP;
             Room aboveRoom = GetRoomAt(upPosition);
