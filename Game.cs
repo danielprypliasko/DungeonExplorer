@@ -65,16 +65,16 @@ namespace DungeonExplorer
                 switch(choice)
                 {
                     case 0:
-                        Console.WriteLine($"Room:\n{currentRoom.GetDescription()}");
+                        Console.WriteLine($"Room:\n{currentRoom.Description}");
                         break;
                     case 1:
                         Console.WriteLine($"Player '{player.Name}'\n\tHealth: {player.Health}\n\tItems: {player.InventoryContents()}");
                         break;
                     case 2:
                         Console.WriteLine($"You look around the room");
-                        bool hasItem = currentRoom.HasItem();
+                        bool hasItem = currentRoom.HasItem;
                         if (!hasItem) { Console.WriteLine($"There's nothing of interest"); break; }
-                        else { Console.WriteLine($"You see an item.\nIt's a {currentRoom.GetItem()}"); }
+                        else { Console.WriteLine($"You see an item.\nIt's a {currentRoom.Item}"); }
                         string[] itemChoices = {
                             "Pickup the item",
                             "Leave it alone",
@@ -106,7 +106,7 @@ namespace DungeonExplorer
                             Room room = rooms[i];
                             IVec2 offset = roomsOffsets[i];
 
-                            bool visited = room.GetVisited();
+                            bool visited = room.Visited;
 
                             string direction = "";
                             if (offset == UP) { direction = "Up"; }

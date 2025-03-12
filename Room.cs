@@ -7,44 +7,26 @@ namespace DungeonExplorer
 {
     public class Room
     {
-        private string description;
-
-        private string item;
-
-        private bool hasItem;
-
-        private bool visited;
+        public string Description { get; private set; }
+        public bool HasItem { get; private set; }
+        public string Item { get; private set; }
+        public bool Visited { get; private set; }
 
         public Room(string description, string item)
         {
-            this.description = description;
-            this.item = item;
-            this.hasItem = true;
-            this.visited = false;
+            this.Description = description;
+            this.Item = item;
+            this.HasItem = true;
+            this.Visited = false;
         }
 
-        public bool GetVisited() { 
-            return this.visited; 
-        }
 
-        public void SetVisited() { this.visited = true; }
-
-        public string GetDescription()
-        {
-            return description;
-        }
-
-        public string GetItem()
-        {
-            return item;
-        }
-
-        public bool HasItem() { return hasItem; }
+        public void SetVisited() { this.Visited = true; }
 
         public string PickUpItem()
         {
-            this.hasItem = false;
-            return this.GetItem();
+            this.HasItem = false;
+            return this.Item;
         }
     }
     public static class RoomMap
