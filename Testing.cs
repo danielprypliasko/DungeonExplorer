@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DungeonExplorer
 {
+    /// <summary>
+    /// A class that provides testing functionality
+    /// </summary>
     public class Testing
     {
 
@@ -17,15 +20,26 @@ namespace DungeonExplorer
 
         private static Random random = new Random();
 
+        /// <summary>
+        /// Records the result of a test, marking it as either successful or failed
+        /// </summary>
+        /// <param name="title">The name of the test</param>
+        /// <param name="fail">Whether the test failed</param>
+        /// <param name="message">Additional message to display if the test failed</param>
         private static void MarkTest(string title, bool fail = false, string message = "")
         {
             if (fail) { errors.Add($"Test '{title}' failed. {message}"); }
             successes.Add($"Test '{title}' ran successfully.");
         }
 
+
+        /// <summary>
+        /// Executes a test and handles any exceptions that may occur
+        /// </summary>
+        /// <param name="testName">The name of the test to run</param>
+        /// <param name="action">The action to execute as the test</param>
         private static void RunTest(string testName, Action action)
         {
-
             try
             {
                 action();
@@ -39,11 +53,12 @@ namespace DungeonExplorer
             MarkTest(testName);
         }
 
-
+        /// <summary>
+        /// Runs all the tests
+        /// </summary>
+        /// <param name="showTests">Whether to print test results</param>
         public static void RunTests(bool showTests = false)
         {
-
-
 
             RunTest("basic room setup", () =>
             {
@@ -82,12 +97,14 @@ namespace DungeonExplorer
 
         }
 
+        /// <summary>
+        /// Prints the results of all tests
+        /// </summary>
         private static void PrintTestStatus()
         {
             foreach (string error in errors) { Console.WriteLine(error); }
             foreach (string success in successes) { Console.WriteLine(success); }
         }
-
     
     }
 }

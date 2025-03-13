@@ -4,41 +4,50 @@ using System.Collections.Generic;
 using static DungeonExplorer.Utils;
 
 namespace DungeonExplorer
-{
+{    
+    /// <summary>
+    /// A public class that manages rooms and their properties, such as Items and Description.
+    /// </summary>
     public class Room
     {
         public string Description { get; private set; }
         public bool HasItem { get; private set; }
-        //public string Item { get; private set; }
         public List<string> Items { get; private set; }
         public bool Visited { get; private set; }
 
+        /// <summary>
+        /// A constructor for the Room class, makes a room with a description containing a list of items
+        /// </summary>
+        /// <param name="description">The description of the room</param>
+        /// <param name="items">The items in the room</param>
         public Room(string description, List<string> items)
         {
             this.Description = description;
-            //this.Item = item;
             this.Items = items;
             this.HasItem = true;
             this.Visited = false;
         }
 
+        /// <summary>
+        /// This method returns the description property
+        /// </summary>
+        /// <returns>A string description of the room</returns>
         public string GetDescription()
         {
             return Description;
         }
 
-        public string ListItems()
-        {
-            string output = "";
-            foreach (var item in Items)
-            {
-                output += ($"{item}\n");
-            }
-            return output;
-        }
-
+        /// <summary>
+        /// This method marks the room as a visited room
+        /// </summary>
         public void SetVisited() { this.Visited = true; }
 
+        /// <summary>
+        /// This method takes in an index of an item in the rooms item list,
+        /// then it removes it from that and list and returns it as a string
+        /// </summary>
+        /// <param name="idx">The index of the item in the list</param>
+        /// <returns>An item (string)</returns>
         public string PickUpItem(int idx)
         {
             
@@ -47,11 +56,12 @@ namespace DungeonExplorer
 
             if (Items.Count == 0) { HasItem = false; }
             return item;
-            //this.HasItem = false;
-            //this.Item = null;
-            //return this.Item;
         }
     }
+
+    /// <summary>
+    /// A static class that manages a 2D grid of rooms and provides methods for room generation/navigation
+    /// </summary>
     public static class RoomMap
     {
         private static Room[,] rooms;
@@ -81,6 +91,11 @@ namespace DungeonExplorer
             "with a crackling fireplace", "containing an ornate fountain", "with strange symbols etched into the floor", "with a massive chandelier", "featuring a mysterious altar", "with bookshelves lining the walls", "with cobwebs in every corner",
             "", "", "", "", "", "", "", "",
         };
+
+        /// <summary>
+        /// Generates a random room description by combining different room attributes
+        /// </summary>
+        /// <returns>A string containing a randomly generated room description</returns>
         public static string GenerateRoomDescription()
         {
             // Generates a random room description
@@ -113,17 +128,32 @@ namespace DungeonExplorer
             "Key",
         };
 
+        /// <summary>
+        /// Returns the room at the specified position in the map
+        /// </summary>
+        /// <param name="position">The 2D position vector of the room</param>
+        /// <returns>The Room at the position or null if position is out of bounds</returns>
         public static Room GetRoomAt(IVec2 position)
         {
             if (position.x < 0 || position.x  >= roomMapSize || position.y < 0 || position.y >= roomMapSize) { return null; }
             return rooms[position.x, position.y];
         }
 
+        /// <summary>
+        /// Sets a room at the specified position in the map
+        /// </summary>
+        /// <param name="position">The 2D position vector where the room should be placed</param>
+        /// <param name="room">The Room object to place at the position</param>
         public static void SetRoomAt(IVec2 position, Room room)
         {
             rooms[position.x, position.y] = room;
         }
 
+        /// <summary>
+        /// Gets all accessible rooms surrounding a given position and their relative offset directions
+        /// </summary>
+        /// <param name="position">The 2D position vector to check around</param>
+        /// <returns>A tuple containing a list of accessible rooms and a list of their offset direction vectors</returns>
         public static (List<Room>, List<IVec2>) GetSurroundingRooms(IVec2 position)
         {
             // Gets all the rooms that are possible to travel to and also the offset of where they are, to display the location (left, right , etc)
@@ -157,6 +187,9 @@ namespace DungeonExplorer
 
         }
 
+        /// <summary>
+        /// Static constructor that initializes the room map with randomly generated rooms
+        /// </summary>
         static RoomMap()
         {
             rooms = new Room[roomMapSize, roomMapSize];
