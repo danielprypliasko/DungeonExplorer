@@ -5,6 +5,9 @@ using static DungeonExplorer.Utils;
 
 namespace DungeonExplorer
 {
+    /// <summary>
+    /// An internal class that manages game state and is able to start the game
+    /// </summary>
     internal class Game
     {
         private Player player;
@@ -12,6 +15,9 @@ namespace DungeonExplorer
 
         private IVec2  position = new IVec2(0,0);
 
+        /// <summary>
+        /// This constructor sets everything up before the game starts.
+        /// </summary>
         public Game()
         {
             // Initialize the game with one room and one player
@@ -45,6 +51,10 @@ namespace DungeonExplorer
             player = new Player(playerName, 100);
 
         }
+
+        /// <summary>
+        /// This method starts the game and begins the players inputs.
+        /// </summary>
         public void Start()
         {
             bool playing = true;
