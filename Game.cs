@@ -146,7 +146,7 @@ namespace DungeonExplorer
                                     case 1:
 
                                         var playerPotions = player.Inv.GetAllPotions();
-                                        List<string> potionChoicePrompt = new List<string>(playerPotions.Select(item => $"Use {item.Name}"));
+                                        List<string> potionChoicePrompt = new List<string>(playerPotions.Select(item => $"Use {item.Name} ({item.UsesLeft} uses left)"));
                                         potionChoicePrompt.Add("Exit");
 
                                         string[] potionChoices = potionChoicePrompt.ToArray();
@@ -175,7 +175,7 @@ namespace DungeonExplorer
                                         break;
                                     case 2:
                                         var playerWeapons = player.Inv.GetAllWeapons();
-                                        List<string> weaponChoicePrompt = new List<string>(playerWeapons.Select(item => $"Equip {item.Name}"));
+                                        List<string> weaponChoicePrompt = new List<string>(playerWeapons.Select(item => $"Equip {item.Name}{(item == player.EquippedWeapon ? " (Equipped)" : "")}"));
                                         weaponChoicePrompt.Add("Exit");
 
                                         string[] weaponChoices = weaponChoicePrompt.ToArray();
@@ -295,7 +295,6 @@ namespace DungeonExplorer
                             }
                             else if (item is Potion potion)
                             {
-                                // Assuming Potion has UsesLeft property
                                 return $"Drink {potion.Name}{(potion.UsesLeft == 0 ? " (No uses left)" : "")}";
                             }
                             else
